@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, SetMetadata } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -24,14 +24,16 @@ export class UserService {
     return this.userRepository.save(createUserDto);
   }
 
+  
   async findAll() {
     const raw =  await this.userRepository.createQueryBuilder('user')
     .leftJoinAndSelect("user.reports","report")
     .getRawMany()
-    return this.userRepository.create(raw)
+    return raw;
     // .execute();
   }
 
+ 
   findOne(name: string) {
     console.log('Called fin ond');
     return this.userRepository

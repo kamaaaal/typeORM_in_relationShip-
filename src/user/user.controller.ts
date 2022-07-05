@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, SetMetadata } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { TableName } from 'src/decorators/table-name.decorator';
+import { ActionType } from 'src/decorators/action-type.decorator';
 
+@TableName('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -12,6 +15,7 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
+  @ActionType("get")
   @Get("byQueryBuilder")
   findAll() {
     return this.userService.findAll();
@@ -27,6 +31,7 @@ export class UserController {
     return this.userService.findAllRelation();
   }
 
+  // @SetMetadata('action',["Read","one"])
   @Get(':id')
   findOne(@Param('id') name: string) {
     return this.userService.findOne(name);

@@ -11,7 +11,7 @@ import { Report } from './entities/report.entity';
 
 @Injectable()
 export class ReportService {
-  findbyPrime: any;
+  // findbyPrime: any;
   // reportRepository : Repository<Report>
 
   constructor(
